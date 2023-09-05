@@ -1,4 +1,6 @@
 import httpx
+import os
+import io
 
 host = "https://copy-logy.ru"
 
@@ -14,17 +16,22 @@ def get_token(host: str, username: str, password: str):
 
 token = get_token(host=host, username=username, password=password)
 
-path_image = r'd:\1.jpg'
+link_image = 'https://i.ytimg.com/vi/JNMk6lKjgEQ/mqdefault.jpg'
 
-media_byte = open(file=path_image, mode='rb')
+with httpx.Client() as client:
+    response_image = client.get(url=link_image)
+
+filename = os.path.basename(link_image)
 
 media = {
-    'file': media_byte
+    'file': (filename, io.BytesIO(response_image.content), 'image/jpg')
 }
 
 headers = {
-    'Authorization':f'Bearer {token}'
+    'Authorization':f'Bearer {token}',
+    'Content-Disposition':f'attachment;filename={filename}'
 }
+
 
 with httpx.Client() as client:
     result = client.post(url=f'{host}/wp-json/wp/v2/media', headers=headers, files=media)
