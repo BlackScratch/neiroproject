@@ -2,7 +2,7 @@ import httpx
 
 url = 'https://api.openai.com/v1/chat/completions'
 
-token = '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'
+token = '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'
 
 messages = [
     {
@@ -11,7 +11,7 @@ messages = [
     }
 ]
 
-question = 'Как тебя зовут?'
+question = 'Как тебя зовут и чем занимаешься?'
 
 messages.append({
     'role': 'user',
@@ -29,4 +29,4 @@ with httpx.Client(timeout=30) as client:
     response = client.post(url=url, auth=auth, json=data)
 
 print(response.json())
-print(response.json()['choises'][0]['message']['content'])
+print(response.json()['choices'][0]['message']['content'])
