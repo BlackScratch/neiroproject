@@ -1,6 +1,6 @@
 import httpx
 
-from connector_site.gettoken import get_token
+from connector_site.get_token import get_token
 
 host = "https://copy-logy.ru/"
 

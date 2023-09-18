@@ -110,7 +110,7 @@ class RequestorMysite:
         return id_media, url_media
 
 if __name__ == '__main__':
-    from gettoken import get_token
+    from get_token import get_token
     token = get_token(host = "https://copy-logy.ru/", username = "nilovaem", password = "b7nA0pN4")
 
     requestor_my_site = RequestorMysite(token =token, host='https://copy-logy.ru')
