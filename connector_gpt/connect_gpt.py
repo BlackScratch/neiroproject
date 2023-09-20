@@ -1,6 +1,8 @@
 import httpx
 import time
 from typing import Dict, List
+import betterlogging as logging
+
 
 class RequestorChatGPT:
     def __init__(self, token: str, proxy: str = None):
@@ -26,18 +28,18 @@ class RequestorChatGPT:
                     response.raise_for_status()
                     return response.json()
             except httpx.HTTPStatusError as exc:
-                print(f'Error status. Status code {exc.response.status_code}. More {exc}')
+                logging.error(f'Error status. Status code {exc.response.status_code}. More {exc}')
                 time.sleep(30)
             except httpx.HTTPError as exc:
-                print(f'HTTP error occured: {exc}')
+                logging.error(f'HTTP error occured: {exc}')
             except httpx.TimeoutException as exc:
-                print(f'A timeout occured: {exc}')
+                logging.error(f'A timeout occured: {exc}')
             except httpx.ProxyError as exc:
-                print(f'A proxyerror occured: {exc}')
+                logging.error(f'A proxyerror occured: {exc}')
             except httpx.NetworkError as exc:
-                print(f'A network error occured: {exc}')
+                logging.error(f'A network error occured: {exc}')
             except Exception as exc:
-                print(f'An error occured: {exc}')
+                logging.error(f'An error occured: {exc}')
         raise Exception('Не удалось получить ответа от сервера')
 
     def _get_chat(self, url: str, messages:List[Dict]):
